@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "processnewsignal.h"
+#include <QList>
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +19,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QList<IProcessLogic*> processLogics;
 };
 
 #endif // MAINWINDOW_H

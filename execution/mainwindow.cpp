@@ -4,13 +4,16 @@
 #include <QIODevice>
 #include <QTextStream>
 #include "qdebug.h"
+#include "processchangexml.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QFile file("/home/mingxing/MFT/log/114/executionTime.log");
+    //QFile file("/home/mingxing/development/tools/signal_change.txt");
+    QFile file("/home/mingxing/development/tools/signal_change_result.txt");
     if(file.exists())
     {
         qDebug()<<"exist"<<endl;
@@ -18,51 +21,42 @@ MainWindow::MainWindow(QWidget *parent) :
 
     bool res = file.open(QIODevice::ReadOnly | QIODevice::Text);
 
-        if (res)
+    if (res)
+    {
 
+        QString line;
+
+        QTextStream in(&file);  //用文件构造流
+
+        line = in.readLine();//读取一行放到字符串里
+
+        int lineNumber = 0;
+        if(!line.isNull())
         {
+            //add process logic for each line
+            //processLogics.append(new ProcessNewSignal());
+            processLogics.append(new ProcessChangeXml());
 
-            QString line;
 
-            QTextStream in(&file);  //用文件构造流
-
-            line = in.readLine();//读取一行放到字符串里
-
-            qDebug() << line;
-            int i = 1;
-            int targetNumber = 0;
-            while(!line.isNull())//字符串有内容
-
+            //apply process logic for each line
+            do
             {
-                ++i;
-                line=in.readLine();//循环读取下行
 
-                QString number = line.split('$').last();
-                QString former = line.split('$').first();
-                int time = number.toInt();
-                if(time > 200 )//&& former.contains("total"))
+                foreach (IProcessLogic* processLogic, processLogics)
                 {
-                    qDebug()<<i<<":"<<time;
-                        targetNumber++;
+                    processLogic->processFile(line);
                 }
+                lineNumber++;
+                line = in.readLine();
 
-
-//                QString total = line.split(':').last();
-//                if(total.toInt() > 100)
-//                {
-//                    qDebug()<<i<<":"<<total;
-//                    targetNumber++;
-//                }
-
-
-
-            }
-            qDebug()<<"total:"<<targetNumber<<endl;
-            file.close();
-        }else{
-            qDebug()<<file.error()<<endl;
-            qDebug()<<file.errorString();
+            }while(!line.isNull());
         }
+        qDebug()<< "total:" << lineNumber << endl;
+        file.close();
+    }else{
+        qDebug() << file.error() << endl;
+        qDebug() << file.errorString();
+    }
 
 
 }
