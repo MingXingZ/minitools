@@ -10,6 +10,7 @@ public:
     bool openXmlFile(QString FilePath);
     bool changeSave();
     QDomDocument m_doc;
+    virtual ~ProcessNewSignal(){}
 
 };
 

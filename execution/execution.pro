@@ -16,13 +16,19 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     iprocesslogic.cpp \
     processnewsignal.cpp \
-    processchangexml.cpp \
-    nodeiterator.cpp
+    nodeiterator.cpp \
+    pugixml/mainfunc.cpp \
+    pugixml/pugixml.cpp \
+    pugixml/signal_walker.cpp \
+    processmodifyxml.cpp
 
 HEADERS  += mainwindow.h \
     iprocesslogic.h \
     processnewsignal.h \
-    processchangexml.h \
-    nodeiterator.h
+    nodeiterator.h \
+    pugixml/pugiconfig.hpp \
+    pugixml/pugixml.hpp \
+    pugixml/signal_walker.h \
+    processmodifyxml.h
 
 FORMS    += mainwindow.ui

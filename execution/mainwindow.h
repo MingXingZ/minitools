@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "processnewsignal.h"
 #include <QList>
+#include "processmodifyxml.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -20,6 +22,8 @@ public:
 private:
     Ui::MainWindow *ui;
     QList<IProcessLogic*> processLogics;
+    ProcessModifyXml proXml;
+    signal_walker walker;
 };
 
 #endif // MAINWINDOW_H

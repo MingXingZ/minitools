@@ -1,0 +1,10 @@
+<configuration id="MFR1 Development" rev="$Rev$" url="$URL$" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <object id="platform" type="MFR1Platform">
+    <signal dom="configurationHash" id="configurationHash" name="old_name1"/>
+    <insignal dom="operationMode" id="mode" name="old_name2"/>
+    <signal id="eventdb" ref="eventDB" name="old_name3"/>
+    <outsignal id="eventsink" ref="eventDB" name="old_name4"/>
+  </object>
+    <signal id="eventdb" ref="eventDB" name="old_name33"/>
+    <outsignal id="eventsink" ref="eventDB" name="old_name44"/>
+</configuration>
