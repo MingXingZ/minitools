@@ -32,7 +32,9 @@ void MainWindow::on_openFolder_btn_clicked()
     //we need to first initialize the system here
     init();
                                     //this can be configured to reduce steps
-    QString path = QFileDialog::getExistingDirectory(this, "select folder", "./",  QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    QString path = QFileDialog::getExistingDirectory(this, "select folder",
+                                                     "/home/zhoumin/workspace/Project/redboxGit/00-Applikation/05-Implementation/src-cmake",
+                                                     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     if(path.isEmpty())
         return;
@@ -356,10 +358,13 @@ QStringList MainWindow::getIncludeFiles(const QString& fileName)
             QList<QByteArray> res;
             if(line.contains("<") && line.contains(">"))
             {
+                continue;
                 res = line.split('<');
                 if(res.size() < 2)
                     continue;
                 resultFile = res.at(1).split('>').at(0);
+                if(!resultFile.contains(".h"))
+                    continue;
             }else
             {
                 res = line.split('"');
@@ -376,7 +381,11 @@ QStringList MainWindow::getIncludeFiles(const QString& fileName)
 
             //decide if the file is within the project
             if(!isProjectFile(resultFile))
-                continue;
+            {
+                 qDebug() << "included files in "<< fileName.split('/').last() << ", but not within the folder:" << resultFile << endl;
+                 continue;
+            }
+
 
             if(filesIncluded.contains(resultFile))
             {
